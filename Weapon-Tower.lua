@@ -67,11 +67,11 @@ window:Toggle("slap all loop(hold slap)", false, function(state)
     end
 end)
 
-window:Toggle("kill all loop(hold slap)", false, function(state)
-    slapLoop = state
-    if state then
+window:Toggle("kill all loop(hold slap)", false, function(state1)
+    slapLoop1 = state1
+    if state1 then
         task.spawn(function()
-            while slapLoop do
+            while slapLoop1 do
                 task.wait(0) -- невелика затримка щоб не заспамити сервер
                 for i, v in pairs(game.Players:GetPlayers()) do
                     if v ~= game.Players.LocalPlayer then
