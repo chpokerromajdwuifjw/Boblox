@@ -4,8 +4,6 @@ game:GetService("StarterGui"):SetCore("SendNotification", {
 	Icon = "rbxassetid://76048685357353"})
 Duration = 5;
 
-workspace.Builds.GamepassPads:Destroy()
-
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
 
 local window = library:Window("weapon 🔫🔫🔫 tower 🗼")
