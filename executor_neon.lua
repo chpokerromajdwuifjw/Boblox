@@ -1,4 +1,4 @@
--- Executor (by csc®) | Neon Cyber — Smooth Edition
+-- Executor (by csc(R)) | Neon Cyber Reskin
 
 local cloneref = cloneref or function(o) return o end
 
@@ -21,7 +21,7 @@ local function GuiParent()
 	local MAX_DISPLAY_ORDER = 2147483647
 
 	local function randomString()
-		local length = math.random(10, 20)
+		local length = math.random(10,20)
 		local array = {}
 		for i = 1, length do
 			array[i] = string.char(math.random(32, 126))
@@ -59,215 +59,448 @@ local function GuiParent()
 	return CoreGui
 end
 
--- ╔══════════════════════════════════════════╗
--- ║   NEON CYBER EXECUTOR  ·  csc®           ║
--- ║   smooth + rounded edition               ║
--- ╚══════════════════════════════════════════╝
+-- ╔═══════════════════════════════════════╗
+-- ║   NEON CYBER EXECUTOR  //  csc(R)   ║
+-- ║   ██████╗██╗   ██╗██████╗ ███████╗   ║
+-- ║  ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝   ║
+-- ║  ██║      ╚████╔╝ ██████╔╝█████╗     ║
+-- ║  ██║       ╚██╔╝  ██╔══██╗██╔══╝     ║
+-- ║  ╚██████╗   ██║   ██████╔╝███████╗   ║
+-- ║   ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝   ║
+-- ╚═══════════════════════════════════════╝
 
--- helper: add UICorner
-local function round(inst, r)
-	local c = Instance.new("UICorner", inst)
-	c.CornerRadius = UDim.new(0, r or 10)
-	return c
-end
-
--- helper: add UIStroke
-local function addStroke(inst, color, thickness, transp)
-	local s = Instance.new("UIStroke", inst)
-	s.Color = color or Color3.fromRGB(0, 255, 255)
-	s.Thickness = thickness or 1
-	s.Transparency = transp or 0
-	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	return s
-end
+-- NEON CYBER PALETTE:
+--   Background:  #0A0A12  (8, 8, 18)
+--   Panel:       #0D0D1A  (13, 13, 26)
+--   Topbar:      #10101F  (16, 16, 31)
+--   Accent Cyan: #00FFFF  (0, 255, 255)
+--   Accent Pink: #FF00AA  (255, 0, 170)
+--   Neon Green:  #00FF7F  (0, 255, 127)
+--   Neon Purple: #CC00FF  (204, 0, 255)
+--   Neon Yellow: #FFEE00  (255, 238, 0)
+--   Dim Text:    #4A4A6A  (74, 74, 106)
+--   Button BG:   #1A1A2E  (26, 26, 46)
+--   Border Glow: #00FFFF  (0, 255, 255)
 
 local G2L = {}
+
 G2L["1"] = GuiParent()
 
--- ═══════════════════════════════════════════
---  TOPBAR
--- ═══════════════════════════════════════════
+-- ── Topbar ──────────────────────────────────────────────────────────────────
 G2L["2"] = Instance.new("Frame", G2L["1"])
-G2L["2"].Name             = "Topbar"
-G2L["2"].BorderSizePixel  = 0
-G2L["2"].BackgroundColor3 = Color3.fromRGB(12, 12, 24)
-G2L["2"].Size             = UDim2.new(0, 490, 0, 30)
-G2L["2"].Position         = UDim2.new(0.3546, 0, 0.33567, 0)
-round(G2L["2"], 12)
-addStroke(G2L["2"], Color3.fromRGB(0, 220, 255), 1.5, 0.1)
+G2L["2"]["BorderSizePixel"] = 0
+G2L["2"]["BackgroundColor3"] = Color3.fromRGB(10, 10, 20)       -- near-black cyber bg
+G2L["2"]["Size"] = UDim2.new(0, 473, 0, 22)
+G2L["2"]["Position"] = UDim2.new(0.3546, 0, 0.33567, 0)
+G2L["2"]["BorderColor3"] = Color3.fromRGB(0, 255, 255)
+G2L["2"]["Name"] = "Topbar"
 
-local tbGrad = Instance.new("UIGradient", G2L["2"])
-tbGrad.Color = ColorSequence.new({
-	ColorSequenceKeypoint.new(0,   Color3.fromRGB(16, 8, 36)),
-	ColorSequenceKeypoint.new(0.5, Color3.fromRGB(8, 14, 32)),
-	ColorSequenceKeypoint.new(1,   Color3.fromRGB(4, 18, 28)),
-})
-tbGrad.Rotation = 90
+-- Cyan top border stripe (neon glow effect)
+local topGlow = Instance.new("Frame", G2L["2"])
+topGlow.Name = "TopGlow"
+topGlow.BorderSizePixel = 0
+topGlow.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+topGlow.Size = UDim2.new(1, 0, 0, 1)
+topGlow.Position = UDim2.new(0, 0, 0, 0)
 
--- Title
+-- ── Topbar Label ────────────────────────────────────────────────────────────
 G2L["4"] = Instance.new("TextLabel", G2L["2"])
-G2L["4"].BorderSizePixel        = 0
-G2L["4"].BackgroundTransparency = 1
-G2L["4"].TextSize               = 13
-G2L["4"].FontFace               = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-G2L["4"].TextColor3             = Color3.fromRGB(0, 240, 255)
-G2L["4"].TextXAlignment         = Enum.TextXAlignment.Left
-G2L["4"].Size                   = UDim2.new(1, -80, 1, 0)
-G2L["4"].Position               = UDim2.new(0, 14, 0, 0)
-G2L["4"].Text                   = [[> EXEC  *  csc(r)]]
+G2L["4"]["TextWrapped"] = true
+G2L["4"]["BorderSizePixel"] = 0
+G2L["4"]["TextSize"] = 13
+G2L["4"]["BackgroundTransparency"] = 1
+G2L["4"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+G2L["4"]["TextColor3"] = Color3.fromRGB(0, 255, 255)            -- neon cyan title
+G2L["4"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["4"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["4"]["Text"] = [[> EXEC // csc(R)]]
 
--- Close
+-- ── Close Button ────────────────────────────────────────────────────────────
 G2L["5"] = Instance.new("ImageButton", G2L["2"])
-G2L["5"].BorderSizePixel        = 0
-G2L["5"].BackgroundTransparency = 1
-G2L["5"].Image                  = [[rbxassetid://11293981586]]
-G2L["5"].ImageColor3            = Color3.fromRGB(255, 60, 130)
-G2L["5"].Size                   = UDim2.new(0, 16, 0, 16)
-G2L["5"].Position               = UDim2.new(1, -22, 0.5, -8)
+G2L["5"]["BorderSizePixel"] = 0
+G2L["5"]["BackgroundTransparency"] = 1
+G2L["5"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
+G2L["5"]["Image"] = [[rbxassetid://11293981586]]
+G2L["5"]["Size"] = UDim2.new(0, 17, 0, 17)
+G2L["5"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["5"]["Position"] = UDim2.new(0.95137, 0, 0.05, 0)
+G2L["5"]["ImageColor3"] = Color3.fromRGB(255, 0, 100)           -- neon pink close icon
+
 G2L["6"] = Instance.new("LocalScript", G2L["5"])
 
--- Minimize
+-- ── Minimize Button ─────────────────────────────────────────────────────────
 G2L["7"] = Instance.new("ImageButton", G2L["2"])
-G2L["7"].BorderSizePixel        = 0
-G2L["7"].BackgroundTransparency = 1
-G2L["7"].Image                  = [[rbxassetid://11421092947]]
-G2L["7"].ImageColor3            = Color3.fromRGB(0, 230, 200)
-G2L["7"].Size                   = UDim2.new(0, 16, 0, 16)
-G2L["7"].Position               = UDim2.new(1, -42, 0.5, -8)
+G2L["7"]["BorderSizePixel"] = 0
+G2L["7"]["BackgroundTransparency"] = 1
+G2L["7"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
+G2L["7"]["Image"] = [[rbxassetid://11421092947]]
+G2L["7"]["Size"] = UDim2.new(0, 17, 0, 17)
+G2L["7"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["7"]["Position"] = UDim2.new(0.89429, 0, 0.05, 0)
+G2L["7"]["ImageColor3"] = Color3.fromRGB(0, 255, 200)           -- neon teal minimize icon
+
 G2L["8"] = Instance.new("LocalScript", G2L["7"])
 
--- ═══════════════════════════════════════════
---  MAIN PANEL
--- ═══════════════════════════════════════════
+-- ── Main Panel ──────────────────────────────────────────────────────────────
 G2L["9"] = Instance.new("Frame", G2L["2"])
-G2L["9"].Name             = "MainStuff"
-G2L["9"].BorderSizePixel  = 0
-G2L["9"].BackgroundColor3 = Color3.fromRGB(9, 9, 20)
-G2L["9"].Size             = UDim2.new(0, 490, 0, 256)
-G2L["9"].Position         = UDim2.new(0, 0, 1, -2)
-round(G2L["9"], 12)
-addStroke(G2L["9"], Color3.fromRGB(0, 200, 255), 1.5, 0.15)
+G2L["9"]["BorderSizePixel"] = 0
+G2L["9"]["BackgroundColor3"] = Color3.fromRGB(8, 8, 18)         -- deep cyber dark
+G2L["9"]["Size"] = UDim2.new(0, 473, 0, 241)
+G2L["9"]["Position"] = UDim2.new(0, 0, 1, 0)
+G2L["9"]["BorderColor3"] = Color3.fromRGB(0, 255, 255)
+G2L["9"]["Name"] = "MainStuff"
 
-local panelGrad = Instance.new("UIGradient", G2L["9"])
-panelGrad.Color = ColorSequence.new({
-	ColorSequenceKeypoint.new(0,   Color3.fromRGB(14, 6, 30)),
-	ColorSequenceKeypoint.new(0.6, Color3.fromRGB(7, 10, 24)),
-	ColorSequenceKeypoint.new(1,   Color3.fromRGB(5, 14, 22)),
-})
-panelGrad.Rotation = 135
+-- Cyan bottom/side border glow
+local borderBottom = Instance.new("Frame", G2L["9"])
+borderBottom.BorderSizePixel = 0
+borderBottom.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+borderBottom.Size = UDim2.new(1, 0, 0, 1)
+borderBottom.Position = UDim2.new(0, 0, 1, -1)
 
--- ═══════════════════════════════════════════
---  EDITOR SCROLL FRAME
--- ═══════════════════════════════════════════
+local borderLeft = Instance.new("Frame", G2L["9"])
+borderLeft.BorderSizePixel = 0
+borderLeft.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+borderLeft.Size = UDim2.new(0, 1, 1, 0)
+borderLeft.Position = UDim2.new(0, 0, 0, 0)
+
+local borderRight = Instance.new("Frame", G2L["9"])
+borderRight.BorderSizePixel = 0
+borderRight.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+borderRight.Size = UDim2.new(0, 1, 1, 0)
+borderRight.Position = UDim2.new(1, -1, 0, 0)
+
+-- ── Editor ScrollingFrame ────────────────────────────────────────────────────
 G2L["a"] = Instance.new("ScrollingFrame", G2L["9"])
-G2L["a"].Active               = true
-G2L["a"].BorderSizePixel      = 0
-G2L["a"].CanvasSize           = UDim2.new(1, 0, 1, 0)
-G2L["a"].BackgroundTransparency = 1
-G2L["a"].Size                 = UDim2.new(1, -6, 0, 212)
-G2L["a"].Position             = UDim2.new(0, 3, 0, 4)
-G2L["a"].ScrollBarImageColor3 = Color3.fromRGB(0, 200, 255)
-G2L["a"].ScrollBarThickness   = 3
+G2L["a"]["Active"] = true
+G2L["a"]["BorderSizePixel"] = 0
+G2L["a"]["CanvasSize"] = UDim2.new(1, 0, 1, 0)
+G2L["a"]["BackgroundColor3"] = Color3.fromRGB(255, 255, 255)
+G2L["a"]["Size"] = UDim2.new(1, 0, 0.86975, 0)
+G2L["a"]["ScrollBarImageColor3"] = Color3.fromRGB(0, 255, 255)  -- neon cyan scrollbar
+G2L["a"]["Position"] = UDim2.new(0, 0, 0, 0)
+G2L["a"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["a"]["ScrollBarThickness"] = 2
+G2L["a"]["BackgroundTransparency"] = 1
 
 G2L["b"] = Instance.new("LocalScript", G2L["a"])
 G2L["c"] = Instance.new("LocalScript", G2L["a"])
 G2L["d"] = Instance.new("LocalScript", G2L["a"])
 
--- Line numbers
+-- ── Line Numbers ─────────────────────────────────────────────────────────────
 G2L["e"] = Instance.new("TextLabel", G2L["a"])
-G2L["e"].Name               = "Lines"
-G2L["e"].BorderSizePixel    = 0
-G2L["e"].TextSize           = 14
-G2L["e"].TextYAlignment     = Enum.TextYAlignment.Top
-G2L["e"].BackgroundColor3   = Color3.fromRGB(9, 9, 20)
-G2L["e"].BackgroundTransparency = 0.5
-G2L["e"].FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-G2L["e"].TextColor3         = Color3.fromRGB(0, 140, 160)
-G2L["e"].Size               = UDim2.new(0, 40, 0, 239)
-G2L["e"].Text               = [[1\n]]
-round(G2L["e"], 6)
+G2L["e"]["BorderSizePixel"] = 0
+G2L["e"]["TextSize"] = 14
+G2L["e"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["e"]["BackgroundColor3"] = Color3.fromRGB(8, 8, 18)
+G2L["e"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["e"]["TextColor3"] = Color3.fromRGB(0, 180, 180)            -- dim cyan line numbers
+G2L["e"]["BackgroundTransparency"] = 0.6
+G2L["e"]["Size"] = UDim2.new(0, 40, 0, 239)
+G2L["e"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["e"]["Text"] = [[1\n]]
+G2L["e"]["Name"] = "Lines"
+
 G2L["f"] = Instance.new("LocalScript", G2L["e"])
 
--- Code TextBox
+-- ── Text Editor (ResponseLabel) ──────────────────────────────────────────────
 G2L["10"] = Instance.new("TextBox", G2L["a"])
-G2L["10"].Name               = "ResponseLabel"
-G2L["10"].TextXAlignment     = Enum.TextXAlignment.Left
-G2L["10"].TextYAlignment     = Enum.TextYAlignment.Top
-G2L["10"].BorderSizePixel    = 0
-G2L["10"].BackgroundTransparency = 1
-G2L["10"].TextSize           = 14
-G2L["10"].TextColor3         = Color3.fromRGB(215, 225, 255)
-G2L["10"].FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-G2L["10"].MultiLine          = true
-G2L["10"].ClearTextOnFocus   = false
-G2L["10"].Size               = UDim2.new(1, 0, 0, 239)
-G2L["10"].Position           = UDim2.new(0, 50, 0, 0)
-G2L["10"].Text               = [[print("Hello world")]]
+G2L["10"]["Name"] = "ResponseLabel"
+G2L["10"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["10"]["BorderSizePixel"] = 0
+G2L["10"]["TextSize"] = 14
+G2L["10"]["TextColor3"] = Color3.fromRGB(220, 230, 255)         -- soft white-blue base text
+G2L["10"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["10"]["BackgroundColor3"] = Color3.fromRGB(8, 8, 18)
+G2L["10"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["10"]["MultiLine"] = true
+G2L["10"]["ClearTextOnFocus"] = false
+G2L["10"]["Size"] = UDim2.new(1, 0, 0, 239)
+G2L["10"]["Position"] = UDim2.new(0, 50, 0, 0)
+G2L["10"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["10"]["Text"] = [[print("Hello world")]]
+G2L["10"]["BackgroundTransparency"] = 1
+
 G2L["11"] = Instance.new("LocalScript", G2L["10"])
 
--- Syntax highlight layers
-local function makeHL(parent, name, z, color)
-	local l = Instance.new("TextLabel", parent)
-	l.Name               = name
-	l.ZIndex             = z
-	l.TextSize           = 14
-	l.TextXAlignment     = Enum.TextXAlignment.Left
-	l.TextYAlignment     = Enum.TextYAlignment.Top
-	l.BackgroundTransparency = 1
-	l.FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-	l.TextColor3         = color
-	l.Size               = UDim2.new(1, 0, 1, 0)
-	l.Text               = [[]]
-	return l
+-- ── Syntax Highlight Layers ──────────────────────────────────────────────────
+
+-- Comments  →  dim green
+G2L["12"] = Instance.new("TextLabel", G2L["10"])
+G2L["12"]["ZIndex"] = 5
+G2L["12"]["TextSize"] = 14
+G2L["12"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["12"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["12"]["BackgroundTransparency"] = 1
+G2L["12"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["12"]["TextColor3"] = Color3.fromRGB(80, 200, 80)           -- muted neon green comments
+G2L["12"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["12"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["12"]["Text"] = [[]]
+G2L["12"]["Name"] = "Comments_"
+
+-- Globals  →  electric cyan
+G2L["13"] = Instance.new("TextLabel", G2L["10"])
+G2L["13"]["ZIndex"] = 5
+G2L["13"]["TextSize"] = 14
+G2L["13"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["13"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["13"]["BackgroundTransparency"] = 1
+G2L["13"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["13"]["TextColor3"] = Color3.fromRGB(0, 240, 255)           -- electric cyan globals
+G2L["13"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["13"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["13"]["Text"] = [[]]
+G2L["13"]["Name"] = "Globals_"
+
+-- Keywords  →  hot magenta/pink
+G2L["14"] = Instance.new("TextLabel", G2L["10"])
+G2L["14"]["ZIndex"] = 5
+G2L["14"]["TextSize"] = 14
+G2L["14"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["14"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["14"]["BackgroundTransparency"] = 1
+G2L["14"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["14"]["TextColor3"] = Color3.fromRGB(255, 50, 180)          -- hot neon pink keywords
+G2L["14"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["14"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["14"]["Text"] = [[]]
+G2L["14"]["Name"] = "Keywords_"
+
+-- Numbers  →  neon yellow-gold
+G2L["15"] = Instance.new("TextLabel", G2L["10"])
+G2L["15"]["ZIndex"] = 4
+G2L["15"]["TextSize"] = 14
+G2L["15"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["15"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["15"]["BackgroundTransparency"] = 1
+G2L["15"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["15"]["TextColor3"] = Color3.fromRGB(255, 220, 0)           -- neon yellow numbers
+G2L["15"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["15"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["15"]["Text"] = [[]]
+G2L["15"]["Name"] = "Numbers_"
+
+-- Remote calls  →  vivid electric blue
+G2L["16"] = Instance.new("TextLabel", G2L["10"])
+G2L["16"]["ZIndex"] = 5
+G2L["16"]["TextSize"] = 14
+G2L["16"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["16"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["16"]["BackgroundTransparency"] = 1
+G2L["16"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["16"]["TextColor3"] = Color3.fromRGB(50, 150, 255)          -- vivid blue remotes
+G2L["16"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["16"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["16"]["Text"] = [[]]
+G2L["16"]["Name"] = "RemoteHighlight_"
+
+-- Strings  →  neon mint green
+G2L["17"] = Instance.new("TextLabel", G2L["10"])
+G2L["17"]["ZIndex"] = 5
+G2L["17"]["TextSize"] = 14
+G2L["17"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["17"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["17"]["BackgroundTransparency"] = 1
+G2L["17"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["17"]["TextColor3"] = Color3.fromRGB(80, 255, 160)          -- neon mint strings
+G2L["17"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["17"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["17"]["Text"] = [[]]
+G2L["17"]["Name"] = "Strings_"
+
+-- Tokens / operators  →  soft lavender white
+G2L["18"] = Instance.new("TextLabel", G2L["10"])
+G2L["18"]["ZIndex"] = 5
+G2L["18"]["TextSize"] = 14
+G2L["18"]["TextXAlignment"] = Enum.TextXAlignment.Left
+G2L["18"]["TextYAlignment"] = Enum.TextYAlignment.Top
+G2L["18"]["BackgroundTransparency"] = 1
+G2L["18"]["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["18"]["TextColor3"] = Color3.fromRGB(200, 200, 255)         -- soft lavender tokens
+G2L["18"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["18"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["18"]["Text"] = [[]]
+G2L["18"]["Name"] = "Tokens_"
+
+-- Line highlight  →  deep purple tint
+G2L["19"] = Instance.new("Frame", G2L["10"])
+G2L["19"]["ZIndex"] = 0
+G2L["19"]["BorderSizePixel"] = 0
+G2L["19"]["BackgroundColor3"] = Color3.fromRGB(60, 0, 100)      -- deep neon purple line hl
+G2L["19"]["Name"] = "LineHighlight"
+G2L["19"]["BackgroundTransparency"] = 0.6
+
+-- Custom caret  →  hot pink pulse bar
+G2L["1a"] = Instance.new("Frame", G2L["10"])
+G2L["1a"]["Visible"] = false
+G2L["1a"]["ZIndex"] = 2
+G2L["1a"]["BackgroundColor3"] = Color3.fromRGB(255, 0, 170)     -- hot pink caret
+G2L["1a"]["Size"] = UDim2.new(0, 1, 0, 16)
+G2L["1a"]["Name"] = "CustomCaret"
+
+-- Selection highlight  →  cyan tint
+G2L["1b"] = Instance.new("Frame", G2L["10"])
+G2L["1b"]["Visible"] = false
+G2L["1b"]["BorderSizePixel"] = 0
+G2L["1b"]["BackgroundColor3"] = Color3.fromRGB(0, 200, 255)     -- cyan selection hl
+G2L["1b"]["Name"] = "SelectionHighlight"
+G2L["1b"]["BackgroundTransparency"] = 0.65
+
+-- ── Bottom Buttons (helper to create styled buttons) ─────────────────────────
+local function makeNeonButton(parent, text, posX, posY, accentColor)
+	local btn = Instance.new("TextButton", parent)
+	btn["BorderSizePixel"] = 1
+	btn["TextSize"] = 13
+	btn["TextColor3"] = accentColor
+	btn["BackgroundColor3"] = Color3.fromRGB(13, 13, 26)
+	btn["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	btn["Size"] = UDim2.new(0, 90, 0, 20)
+	btn["BorderColor3"] = accentColor
+	btn["Text"] = text
+	btn["Position"] = UDim2.new(posX, 0, posY, 0)
+	-- Hover glow effect via UIStroke
+	local stroke = Instance.new("UIStroke", btn)
+	stroke.Color = accentColor
+	stroke.Thickness = 1
+	stroke.Transparency = 0.4
+	return btn
 end
 
-G2L["12"] = makeHL(G2L["10"], "Comments_",        5, Color3.fromRGB(70, 190, 90))
-G2L["13"] = makeHL(G2L["10"], "Globals_",         5, Color3.fromRGB(0, 230, 255))
-G2L["14"] = makeHL(G2L["10"], "Keywords_",        5, Color3.fromRGB(255, 60, 180))
-G2L["15"] = makeHL(G2L["10"], "Numbers_",         4, Color3.fromRGB(255, 215, 0))
-G2L["16"] = makeHL(G2L["10"], "RemoteHighlight_", 5, Color3.fromRGB(60, 150, 255))
-G2L["17"] = makeHL(G2L["10"], "Strings_",         5, Color3.fromRGB(80, 255, 160))
-G2L["18"] = makeHL(G2L["10"], "Tokens_",          5, Color3.fromRGB(190, 190, 255))
+-- Execute  →  neon cyan
+G2L["1c"] = makeNeonButton(G2L["9"], "> EXEC", 0.795, 0.895, Color3.fromRGB(0, 255, 255))
+G2L["1d"] = Instance.new("LocalScript", G2L["1c"])
 
--- Line highlight
-G2L["19"] = Instance.new("Frame", G2L["10"])
-G2L["19"].Name               = "LineHighlight"
-G2L["19"].ZIndex             = 0
-G2L["19"].BorderSizePixel    = 0
-G2L["19"].BackgroundColor3   = Color3.fromRGB(80, 0, 130)
-G2L["19"].BackgroundTransparency = 0.65
-round(G2L["19"], 4)
+-- Clear  →  hot pink
+G2L["1e"] = makeNeonButton(G2L["9"], "CLEAR", 0.58778, 0.895, Color3.fromRGB(255, 50, 150))
+G2L["1f"] = Instance.new("LocalScript", G2L["1e"])
 
--- Caret
-G2L["1a"] = Instance.new("Frame", G2L["10"])
-G2L["1a"].Name               = "CustomCaret"
-G2L["1a"].Visible            = false
-G2L["1a"].ZIndex             = 2
-G2L["1a"].BackgroundColor3   = Color3.fromRGB(255, 30, 160)
-G2L["1a"].Size               = UDim2.new(0, 2, 0, 16)
-round(G2L["1a"], 2)
+-- Save  →  neon green
+G2L["20"] = makeNeonButton(G2L["9"], "SAVE", 0.38485, 0.895, Color3.fromRGB(0, 255, 127))
+G2L["20"]["Size"] = UDim2.new(0, 89, 0, 20)
+G2L["21"] = Instance.new("LocalScript", G2L["20"])
 
--- Selection
-G2L["1b"] = Instance.new("Frame", G2L["10"])
-G2L["1b"].Name               = "SelectionHighlight"
-G2L["1b"].Visible            = false
-G2L["1b"].BorderSizePixel    = 0
-G2L["1b"].BackgroundColor3   = Color3.fromRGB(0, 190, 255)
-G2L["1b"].BackgroundTransparency = 0.68
-round(G2L["1b"], 3)
+-- Open  →  neon purple
+G2L["22"] = makeNeonButton(G2L["9"], "OPEN", 0.177, 0.895, Color3.fromRGB(180, 50, 255))
+G2L["23"] = Instance.new("LocalScript", G2L["22"])
 
--- ═══════════════════════════════════════════
---  BOTTOM BUTTONS
--- ═══════════════════════════════════════════
-local function makeBtn(parent, label, posX, accentColor)
+-- ── Open/Save Dialog Overlay ─────────────────────────────────────────────────
+G2L["24"] = Instance.new("Frame", G2L["9"])
+G2L["24"]["Visible"] = false
+G2L["24"]["BorderSizePixel"] = 0
+G2L["24"]["BackgroundColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["24"]["Size"] = UDim2.new(1, 0, 1, 0)
+G2L["24"]["BorderColor3"] = Color3.fromRGB(0, 0, 0)
+G2L["24"]["Name"] = "opensavedialog"
+G2L["24"]["BackgroundTransparency"] = 0.35
+
+local function makeDialogFrame(parent, name)
+	local f = Instance.new("Frame", parent)
+	f["Visible"] = false
+	f["BorderSizePixel"] = 1
+	f["BackgroundColor3"] = Color3.fromRGB(10, 10, 22)
+	f["AnchorPoint"] = Vector2.new(0.5, 0.5)
+	f["Size"] = UDim2.new(0, 327, 0, 76)
+	f["Position"] = UDim2.new(0.5, 0, 0.5, 0)
+	f["BorderColor3"] = Color3.fromRGB(0, 255, 255)
+	f["Name"] = name
+	-- Cyan border stroke
+	local stroke = Instance.new("UIStroke", f)
+	stroke.Color = Color3.fromRGB(0, 255, 255)
+	stroke.Thickness = 1
+	return f
+end
+
+local function makeDialogTextBox(parent)
+	local tb = Instance.new("TextBox", parent)
+	tb["BorderSizePixel"] = 1
+	tb["TextWrapped"] = true
+	tb["TextSize"] = 14
+	tb["TextColor3"] = Color3.fromRGB(0, 255, 255)
+	tb["BackgroundColor3"] = Color3.fromRGB(8, 8, 20)
+	tb["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+	tb["ClearTextOnFocus"] = false
+	tb["PlaceholderText"] = [[filename...]]
+	tb["Size"] = UDim2.new(0, 308, 0, 26)
+	tb["Position"] = UDim2.new(0.03058, 0, 0.11368, 0)
+	tb["BorderColor3"] = Color3.fromRGB(0, 255, 255)
+	tb["Text"] = [[]]
+	local stroke = Instance.new("UIStroke", tb)
+	stroke.Color = Color3.fromRGB(0, 255, 255)
+	stroke.Thickness = 1
+	return tb
+end
+
+local function makeDialogButton(parent, text, posX, color)
 	local btn = Instance.new("TextButton", parent)
-	btn.BorderSizePixel    = 0
-	btn.TextSize           = 13
-	btn.TextColor3         = accentColor
-	btn.BackgroundColor3   = Color3.fromRGB(16, 10, 34)
-	btn.FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-	btn.Size               = UDim2.new(0, 96, 0, 24)
-	btn.Position           = UDim2.new(posX, 0, 0, 224)
+	btn["BorderSizePixel"] = 1
+	btn["TextSize"] = 14
+	btn["TextColor3"] = color
+	btn["BackgroundColor3"] = Color3.fromRGB(12, 12, 24)
+	btn["FontFace"] = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	btn["Size"] = UDim2.new(0, 100, 0, 22)
+	btn["BorderColor3"] = color
+	btn["Text"] = text
+	btn["Position"] = UDim2.new(posX, 0, 0.57895, 0)
+	local stroke = Instance.new("UIStroke", btn)
+	stroke.Color = color
+	stroke.Thickness = 1
+	return btn
+end
+
+-- Save dialog
+G2L["25"] = makeDialogFrame(G2L["24"], "save")
+G2L["26"] = makeDialogTextBox(G2L["25"])
+G2L["27"] = makeDialogButton(G2L["25"], "SAVE", 0.66667, Color3.fromRGB(0, 255, 127))
+G2L["28"] = Instance.new("LocalScript", G2L["27"])
+G2L["29"] = makeDialogButton(G2L["25"], "CANCEL", 0.34557, Color3.fromRGB(255, 50, 150))
+G2L["2a"] = Instance.new("LocalScript", G2L["29"])
+
+-- Open dialog
+G2L["2b"] = makeDialogFrame(G2L["24"], "open")
+G2L["2c"] = makeDialogTextBox(G2L["2b"])
+G2L["2d"] = makeDialogButton(G2L["2b"], "OPEN", 0.66667, Color3.fromRGB(180, 50, 255))
+G2L["2e"] = Instance.new("LocalScript", G2L["2d"])
+G2L["2f"] = makeDialogButton(G2L["2b"], "CANCEL", 0.34557, Color3.fromRGB(255, 50, 150))
+G2L["30"] = Instance.new("LocalScript", G2L["2f"])
+
+-- ════════════════════════════════════════════════════════════════════════════
+--  SCRIPT LOGIC  (unchanged from original, only UI refs updated above)
+-- ════════════════════════════════════════════════════════════════════════════
+
+-- Drag
+local function C_3()
+	local script = G2L["3"]
+	local UserInputService = Services.UserInputService
+	local gui = G2L["2"]
+	local dragging, dragInput, dragStart, startPos
+
+	local function update(input)
+		local delta = input.Position - dragStart
+		gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+	end
+
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = gui.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then dragging = false end
+			end)
+		end
+	end)
+
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then update(input) end
+	end)
+end
+task.spa.Position           = UDim2.new(posX, 0, 0, 224)
 	btn.Text               = label
 	btn.AutoButtonColor    = false
 	round(btn, 8)
