@@ -1,4 +1,4 @@
--- Executor (by dnezero) | Neon Cyber Reskin
+-- Executor (by csc®) | Neon Cyber — Smooth Edition
 
 local cloneref = cloneref or function(o) return o end
 
@@ -21,7 +21,7 @@ local function GuiParent()
 	local MAX_DISPLAY_ORDER = 2147483647
 
 	local function randomString()
-		local length = math.random(10,20)
+		local length = math.random(10, 20)
 		local array = {}
 		for i = 1, length do
 			array[i] = string.char(math.random(32, 126))
@@ -59,14 +59,481 @@ local function GuiParent()
 	return CoreGui
 end
 
--- ╔═══════════════════════════════════════╗
--- ║   NEON CYBER EXECUTOR  //  dnezero   ║
--- ║   ██████╗██╗   ██╗██████╗ ███████╗   ║
--- ║  ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝   ║
--- ║  ██║      ╚████╔╝ ██████╔╝█████╗     ║
--- ║  ██║       ╚██╔╝  ██╔══██╗██╔══╝     ║
--- ║  ╚██████╗   ██║   ██████╔╝███████╗   ║
--- ║   ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝   ║
+-- ╔══════════════════════════════════════════╗
+-- ║   NEON CYBER EXECUTOR  ·  csc®           ║
+-- ║   smooth + rounded edition               ║
+-- ╚══════════════════════════════════════════╝
+
+-- helper: add UICorner
+local function round(inst, r)
+	local c = Instance.new("UICorner", inst)
+	c.CornerRadius = UDim.new(0, r or 10)
+	return c
+end
+
+-- helper: add UIStroke
+local function addStroke(inst, color, thickness, transp)
+	local s = Instance.new("UIStroke", inst)
+	s.Color = color or Color3.fromRGB(0, 255, 255)
+	s.Thickness = thickness or 1
+	s.Transparency = transp or 0
+	s.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	return s
+end
+
+local G2L = {}
+G2L["1"] = GuiParent()
+
+-- ═══════════════════════════════════════════
+--  TOPBAR
+-- ═══════════════════════════════════════════
+G2L["2"] = Instance.new("Frame", G2L["1"])
+G2L["2"].Name             = "Topbar"
+G2L["2"].BorderSizePixel  = 0
+G2L["2"].BackgroundColor3 = Color3.fromRGB(12, 12, 24)
+G2L["2"].Size             = UDim2.new(0, 490, 0, 30)
+G2L["2"].Position         = UDim2.new(0.3546, 0, 0.33567, 0)
+round(G2L["2"], 12)
+addStroke(G2L["2"], Color3.fromRGB(0, 220, 255), 1.5, 0.1)
+
+local tbGrad = Instance.new("UIGradient", G2L["2"])
+tbGrad.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0,   Color3.fromRGB(16, 8, 36)),
+	ColorSequenceKeypoint.new(0.5, Color3.fromRGB(8, 14, 32)),
+	ColorSequenceKeypoint.new(1,   Color3.fromRGB(4, 18, 28)),
+})
+tbGrad.Rotation = 90
+
+-- Title
+G2L["4"] = Instance.new("TextLabel", G2L["2"])
+G2L["4"].BorderSizePixel        = 0
+G2L["4"].BackgroundTransparency = 1
+G2L["4"].TextSize               = 13
+G2L["4"].FontFace               = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+G2L["4"].TextColor3             = Color3.fromRGB(0, 240, 255)
+G2L["4"].TextXAlignment         = Enum.TextXAlignment.Left
+G2L["4"].Size                   = UDim2.new(1, -80, 1, 0)
+G2L["4"].Position               = UDim2.new(0, 14, 0, 0)
+G2L["4"].Text                   = [[> EXEC  *  csc(r)]]
+
+-- Close
+G2L["5"] = Instance.new("ImageButton", G2L["2"])
+G2L["5"].BorderSizePixel        = 0
+G2L["5"].BackgroundTransparency = 1
+G2L["5"].Image                  = [[rbxassetid://11293981586]]
+G2L["5"].ImageColor3            = Color3.fromRGB(255, 60, 130)
+G2L["5"].Size                   = UDim2.new(0, 16, 0, 16)
+G2L["5"].Position               = UDim2.new(1, -22, 0.5, -8)
+G2L["6"] = Instance.new("LocalScript", G2L["5"])
+
+-- Minimize
+G2L["7"] = Instance.new("ImageButton", G2L["2"])
+G2L["7"].BorderSizePixel        = 0
+G2L["7"].BackgroundTransparency = 1
+G2L["7"].Image                  = [[rbxassetid://11421092947]]
+G2L["7"].ImageColor3            = Color3.fromRGB(0, 230, 200)
+G2L["7"].Size                   = UDim2.new(0, 16, 0, 16)
+G2L["7"].Position               = UDim2.new(1, -42, 0.5, -8)
+G2L["8"] = Instance.new("LocalScript", G2L["7"])
+
+-- ═══════════════════════════════════════════
+--  MAIN PANEL
+-- ═══════════════════════════════════════════
+G2L["9"] = Instance.new("Frame", G2L["2"])
+G2L["9"].Name             = "MainStuff"
+G2L["9"].BorderSizePixel  = 0
+G2L["9"].BackgroundColor3 = Color3.fromRGB(9, 9, 20)
+G2L["9"].Size             = UDim2.new(0, 490, 0, 256)
+G2L["9"].Position         = UDim2.new(0, 0, 1, -2)
+round(G2L["9"], 12)
+addStroke(G2L["9"], Color3.fromRGB(0, 200, 255), 1.5, 0.15)
+
+local panelGrad = Instance.new("UIGradient", G2L["9"])
+panelGrad.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0,   Color3.fromRGB(14, 6, 30)),
+	ColorSequenceKeypoint.new(0.6, Color3.fromRGB(7, 10, 24)),
+	ColorSequenceKeypoint.new(1,   Color3.fromRGB(5, 14, 22)),
+})
+panelGrad.Rotation = 135
+
+-- ═══════════════════════════════════════════
+--  EDITOR SCROLL FRAME
+-- ═══════════════════════════════════════════
+G2L["a"] = Instance.new("ScrollingFrame", G2L["9"])
+G2L["a"].Active               = true
+G2L["a"].BorderSizePixel      = 0
+G2L["a"].CanvasSize           = UDim2.new(1, 0, 1, 0)
+G2L["a"].BackgroundTransparency = 1
+G2L["a"].Size                 = UDim2.new(1, -6, 0, 212)
+G2L["a"].Position             = UDim2.new(0, 3, 0, 4)
+G2L["a"].ScrollBarImageColor3 = Color3.fromRGB(0, 200, 255)
+G2L["a"].ScrollBarThickness   = 3
+
+G2L["b"] = Instance.new("LocalScript", G2L["a"])
+G2L["c"] = Instance.new("LocalScript", G2L["a"])
+G2L["d"] = Instance.new("LocalScript", G2L["a"])
+
+-- Line numbers
+G2L["e"] = Instance.new("TextLabel", G2L["a"])
+G2L["e"].Name               = "Lines"
+G2L["e"].BorderSizePixel    = 0
+G2L["e"].TextSize           = 14
+G2L["e"].TextYAlignment     = Enum.TextYAlignment.Top
+G2L["e"].BackgroundColor3   = Color3.fromRGB(9, 9, 20)
+G2L["e"].BackgroundTransparency = 0.5
+G2L["e"].FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["e"].TextColor3         = Color3.fromRGB(0, 140, 160)
+G2L["e"].Size               = UDim2.new(0, 40, 0, 239)
+G2L["e"].Text               = [[1\n]]
+round(G2L["e"], 6)
+G2L["f"] = Instance.new("LocalScript", G2L["e"])
+
+-- Code TextBox
+G2L["10"] = Instance.new("TextBox", G2L["a"])
+G2L["10"].Name               = "ResponseLabel"
+G2L["10"].TextXAlignment     = Enum.TextXAlignment.Left
+G2L["10"].TextYAlignment     = Enum.TextYAlignment.Top
+G2L["10"].BorderSizePixel    = 0
+G2L["10"].BackgroundTransparency = 1
+G2L["10"].TextSize           = 14
+G2L["10"].TextColor3         = Color3.fromRGB(215, 225, 255)
+G2L["10"].FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+G2L["10"].MultiLine          = true
+G2L["10"].ClearTextOnFocus   = false
+G2L["10"].Size               = UDim2.new(1, 0, 0, 239)
+G2L["10"].Position           = UDim2.new(0, 50, 0, 0)
+G2L["10"].Text               = [[print("Hello world")]]
+G2L["11"] = Instance.new("LocalScript", G2L["10"])
+
+-- Syntax highlight layers
+local function makeHL(parent, name, z, color)
+	local l = Instance.new("TextLabel", parent)
+	l.Name               = name
+	l.ZIndex             = z
+	l.TextSize           = 14
+	l.TextXAlignment     = Enum.TextXAlignment.Left
+	l.TextYAlignment     = Enum.TextYAlignment.Top
+	l.BackgroundTransparency = 1
+	l.FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+	l.TextColor3         = color
+	l.Size               = UDim2.new(1, 0, 1, 0)
+	l.Text               = [[]]
+	return l
+end
+
+G2L["12"] = makeHL(G2L["10"], "Comments_",        5, Color3.fromRGB(70, 190, 90))
+G2L["13"] = makeHL(G2L["10"], "Globals_",         5, Color3.fromRGB(0, 230, 255))
+G2L["14"] = makeHL(G2L["10"], "Keywords_",        5, Color3.fromRGB(255, 60, 180))
+G2L["15"] = makeHL(G2L["10"], "Numbers_",         4, Color3.fromRGB(255, 215, 0))
+G2L["16"] = makeHL(G2L["10"], "RemoteHighlight_", 5, Color3.fromRGB(60, 150, 255))
+G2L["17"] = makeHL(G2L["10"], "Strings_",         5, Color3.fromRGB(80, 255, 160))
+G2L["18"] = makeHL(G2L["10"], "Tokens_",          5, Color3.fromRGB(190, 190, 255))
+
+-- Line highlight
+G2L["19"] = Instance.new("Frame", G2L["10"])
+G2L["19"].Name               = "LineHighlight"
+G2L["19"].ZIndex             = 0
+G2L["19"].BorderSizePixel    = 0
+G2L["19"].BackgroundColor3   = Color3.fromRGB(80, 0, 130)
+G2L["19"].BackgroundTransparency = 0.65
+round(G2L["19"], 4)
+
+-- Caret
+G2L["1a"] = Instance.new("Frame", G2L["10"])
+G2L["1a"].Name               = "CustomCaret"
+G2L["1a"].Visible            = false
+G2L["1a"].ZIndex             = 2
+G2L["1a"].BackgroundColor3   = Color3.fromRGB(255, 30, 160)
+G2L["1a"].Size               = UDim2.new(0, 2, 0, 16)
+round(G2L["1a"], 2)
+
+-- Selection
+G2L["1b"] = Instance.new("Frame", G2L["10"])
+G2L["1b"].Name               = "SelectionHighlight"
+G2L["1b"].Visible            = false
+G2L["1b"].BorderSizePixel    = 0
+G2L["1b"].BackgroundColor3   = Color3.fromRGB(0, 190, 255)
+G2L["1b"].BackgroundTransparency = 0.68
+round(G2L["1b"], 3)
+
+-- ═══════════════════════════════════════════
+--  BOTTOM BUTTONS
+-- ═══════════════════════════════════════════
+local function makeBtn(parent, label, posX, accentColor)
+	local btn = Instance.new("TextButton", parent)
+	btn.BorderSizePixel    = 0
+	btn.TextSize           = 13
+	btn.TextColor3         = accentColor
+	btn.BackgroundColor3   = Color3.fromRGB(16, 10, 34)
+	btn.FontFace           = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	btn.Size               = UDim2.new(0, 96, 0, 24)
+	btn.Position           = UDim2.new(posX, 0, 0, 224)
+	btn.Text               = label
+	btn.AutoButtonColor    = false
+	round(btn, 8)
+	addStroke(btn, accentColor, 1, 0.2)
+	btn.MouseEnter:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(24, 16, 48) end)
+	btn.MouseLeave:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(16, 10, 34) end)
+	return btn
+end
+
+G2L["1c"] = makeBtn(G2L["9"], "> EXECUTE", 0.59, Color3.fromRGB(0, 240, 255))
+G2L["1d"] = Instance.new("LocalScript", G2L["1c"])
+
+G2L["1e"] = makeBtn(G2L["9"], "x CLEAR",   0.39, Color3.fromRGB(255, 60, 140))
+G2L["1f"] = Instance.new("LocalScript", G2L["1e"])
+
+G2L["20"] = makeBtn(G2L["9"], "v SAVE",    0.20, Color3.fromRGB(0, 255, 130))
+G2L["21"] = Instance.new("LocalScript", G2L["20"])
+
+G2L["22"] = makeBtn(G2L["9"], "^ OPEN",    0.01, Color3.fromRGB(170, 60, 255))
+G2L["23"] = Instance.new("LocalScript", G2L["22"])
+
+-- ═══════════════════════════════════════════
+--  DIALOG OVERLAY
+-- ═══════════════════════════════════════════
+G2L["24"] = Instance.new("Frame", G2L["9"])
+G2L["24"].Name               = "opensavedialog"
+G2L["24"].Visible            = false
+G2L["24"].BorderSizePixel    = 0
+G2L["24"].BackgroundColor3   = Color3.fromRGB(0, 0, 0)
+G2L["24"].BackgroundTransparency = 0.4
+G2L["24"].Size               = UDim2.new(1, 0, 1, 0)
+round(G2L["24"], 12)
+
+local function makeDialog(parent, name)
+	local f = Instance.new("Frame", parent)
+	f.Name               = name
+	f.Visible            = false
+	f.BorderSizePixel    = 0
+	f.BackgroundColor3   = Color3.fromRGB(11, 10, 26)
+	f.AnchorPoint        = Vector2.new(0.5, 0.5)
+	f.Size               = UDim2.new(0, 340, 0, 88)
+	f.Position           = UDim2.new(0.5, 0, 0.5, 0)
+	round(f, 14)
+	addStroke(f, Color3.fromRGB(0, 220, 255), 1.5, 0)
+	local g = Instance.new("UIGradient", f)
+	g.Color = ColorSequence.new({
+		ColorSequenceKeypoint.new(0, Color3.fromRGB(18, 8, 40)),
+		ColorSequenceKeypoint.new(1, Color3.fromRGB(6, 14, 28)),
+	})
+	g.Rotation = 120
+	return f
+end
+
+local function makeDialogInput(parent)
+	local tb = Instance.new("TextBox", parent)
+	tb.BorderSizePixel      = 0
+	tb.TextSize             = 14
+	tb.TextColor3           = Color3.fromRGB(0, 240, 255)
+	tb.BackgroundColor3     = Color3.fromRGB(7, 7, 20)
+	tb.FontFace             = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Regular, Enum.FontStyle.Normal)
+	tb.ClearTextOnFocus     = false
+	tb.PlaceholderText      = [[filename...]]
+	tb.PlaceholderColor3    = Color3.fromRGB(0, 100, 120)
+	tb.Size                 = UDim2.new(1, -24, 0, 30)
+	tb.Position             = UDim2.new(0, 12, 0, 10)
+	tb.Text                 = [[]]
+	round(tb, 8)
+	addStroke(tb, Color3.fromRGB(0, 200, 255), 1, 0.3)
+	return tb
+end
+
+local function makeDialogBtn(parent, label, posX, color)
+	local btn = Instance.new("TextButton", parent)
+	btn.BorderSizePixel  = 0
+	btn.TextSize         = 13
+	btn.TextColor3       = color
+	btn.BackgroundColor3 = Color3.fromRGB(14, 12, 30)
+	btn.FontFace         = Font.new([[rbxasset://fonts/families/Inconsolata.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	btn.Size             = UDim2.new(0, 108, 0, 24)
+	btn.Position         = UDim2.new(posX, 0, 1, -32)
+	btn.Text             = label
+	btn.AutoButtonColor  = false
+	round(btn, 8)
+	addStroke(btn, color, 1, 0.2)
+	btn.MouseEnter:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(22, 16, 46) end)
+	btn.MouseLeave:Connect(function() btn.BackgroundColor3 = Color3.fromRGB(14, 12, 30) end)
+	return btn
+end
+
+-- Save dialog
+G2L["25"] = makeDialog(G2L["24"], "save")
+G2L["26"] = makeDialogInput(G2L["25"])
+G2L["27"] = makeDialogBtn(G2L["25"], "v SAVE",   0.55, Color3.fromRGB(0, 255, 130))
+G2L["28"] = Instance.new("LocalScript", G2L["27"])
+G2L["29"] = makeDialogBtn(G2L["25"], "x CANCEL", 0.07, Color3.fromRGB(255, 60, 140))
+G2L["2a"] = Instance.new("LocalScript", G2L["29"])
+
+-- Open dialog
+G2L["2b"] = makeDialog(G2L["24"], "open")
+G2L["2c"] = makeDialogInput(G2L["2b"])
+G2L["2d"] = makeDialogBtn(G2L["2b"], "^ OPEN",   0.55, Color3.fromRGB(170, 60, 255))
+G2L["2e"] = Instance.new("LocalScript", G2L["2d"])
+G2L["2f"] = makeDialogBtn(G2L["2b"], "x CANCEL", 0.07, Color3.fromRGB(255, 60, 140))
+G2L["30"] = Instance.new("LocalScript", G2L["2f"])
+
+-- ════════════════════════════════════════════════════════════════════════════
+--  LOGIC
+-- ════════════════════════════════════════════════════════════════════════════
+
+-- Drag
+local function C_3()
+	local UIS = Services.UserInputService
+	local gui = G2L["2"]
+	local dragging, dragInput, dragStart, startPos
+
+	gui.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1
+		or input.UserInputType == Enum.UserInputType.Touch then
+			dragging  = true
+			dragStart = input.Position
+			startPos  = gui.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then dragging = false end
+			end)
+		end
+	end)
+	gui.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement
+		or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	UIS.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			local delta = input.Position - dragStart
+			gui.Position = UDim2.new(
+				startPos.X.Scale, startPos.X.Offset + delta.X,
+				startPos.Y.Scale, startPos.Y.Offset + delta.Y
+			)
+		end
+	end)
+end
+task.spawn(C_3)
+
+-- Close
+local function C_6()
+	G2L["5"].MouseButton1Click:Connect(function() G2L["2"]:Destroy() end)
+end
+task.spawn(C_6)
+
+-- Minimize
+local function C_8()
+	G2L["7"].MouseButton1Click:Connect(function()
+		G2L["9"].Visible = not G2L["9"].Visible
+	end)
+end
+task.spawn(C_8)
+
+-- Auto-scroll
+local function C_b()
+	local Tws = Services.TweenService
+	local TS  = Services.TextService
+	local sf  = G2L["a"]
+	local tb  = sf:FindFirstChildOfClass("TextBox")
+	if not tb then return end
+	local ti  = TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+	local function scroll()
+		local ts = TS:GetTextSize(tb.Text, tb.TextSize, tb.Font, Vector2.new(tb.AbsoluteSize.X, 10000))
+		sf.CanvasSize = UDim2.new(1, 0, 0, math.max(ts.Y + 10, tb.AbsoluteSize.Y))
+		local maxY = math.max(0, sf.CanvasSize.Y.Offset - sf.AbsoluteSize.Y)
+		Tws:Create(sf, ti, { CanvasPosition = Vector2.new(sf.CanvasPosition.X, maxY) }):Play()
+	end
+
+	tb:GetPropertyChangedSignal("Text"):Connect(scroll)
+	tb:GetPropertyChangedSignal("AbsoluteSize"):Connect(scroll)
+	sf:GetPropertyChangedSignal("AbsoluteSize"):Connect(scroll)
+	task.defer(scroll)
+end
+task.spawn(C_b)
+
+-- Scroll-to-caret
+local function C_c()
+	local TS = Services.TextService
+	local sf = G2L["a"]
+
+	local function caretLine(tb)
+		local text = tb.Text
+		local cp   = tb.CursorPosition - 1
+		if cp < 0 then return 1 end
+		local n = 1
+		for i = 1, cp do if text:sub(i, i) == "\n" then n += 1 end end
+		return n
+	end
+
+	local function update()
+		local tb = sf:FindFirstChildOfClass("TextBox")
+		if not tb then return end
+		local pad = sf:FindFirstChildOfClass("UIPadding")
+		local lp  = pad and pad.PaddingLeft.Offset or 0
+		local avW = sf.AbsoluteSize.X - lp
+		local b   = TS:GetTextSize(tb.Text, tb.TextSize, tb.Font, Vector2.new(avW, 99999))
+		sf.CanvasSize = UDim2.new(1, 0, 0, math.max(sf.AbsoluteSize.Y, b.Y + 5))
+		if tb:IsFocused() then
+			local lh   = TS:GetTextSize("A", tb.TextSize, tb.Font, Vector2.new(0, 0)).Y
+			local ln   = caretLine(tb)
+			local tY   = (ln - 1) * lh
+			local maxY = math.max(0, b.Y - sf.AbsoluteSize.Y)
+			sf.CanvasPosition = Vector2.new(0, math.clamp(tY - sf.AbsoluteSize.Y / 2, 0, maxY))
+		end
+	end
+
+	sf.ChildAdded:Connect(function(child)
+		if not child:IsA("TextBox") then return end
+		update()
+		child:GetPropertyChangedSignal("Text"):Connect(update)
+		child:GetPropertyChangedSignal("CursorPosition"):Connect(update)
+		child.Focused:Connect(update); child.FocusLost:Connect(update)
+	end)
+	sf.ChildRemoved:Connect(update)
+	for _, ch in ipairs(sf:GetChildren()) do
+		if ch:IsA("TextBox") then
+			ch:GetPropertyChangedSignal("Text"):Connect(update)
+			ch:GetPropertyChangedSignal("CursorPosition"):Connect(update)
+			ch.Focused:Connect(update); ch.FocusLost:Connect(update)
+		end
+	end
+	update()
+	sf:GetPropertyChangedSignal("AbsoluteSize"):Connect(update)
+end
+task.spawn(C_c)
+
+-- Syntax highlighting
+local function C_d()
+	local lua_keywords = {
+		"and","break","do","else","elseif","end","false","for",
+		"function","goto","if","in","local","nil","not","or",
+		"repeat","return","then","true","until","while"
+	}
+	local global_env = {
+		"getrawmetatable","game","workspace","script","math","string",
+		"table","print","wait","BrickColor","Color3","next","pairs",
+		"ipairs","select","unpack","Instance","Vector2","Vector3",
+		"CFrame","Ray","UDim2","Enum","assert","error","warn",
+		"tick","loadstring","_G","shared","getfenv","setfenv",
+		"newproxy","setmetatable","getmetatable","os","debug","pcall",
+		"ypcall","xpcall","rawequal","rawset","rawget","tonumber",
+		"tostring","type","typeof","_VERSION","coroutine","delay",
+		"require","spawn","LoadLibrary","settings","stats","time",
+		"UserSettings","version","Axes","ColorSequence","Faces",
+		"ColorSequenceKeypoint","NumberRange","NumberSequence",
+		"NumberSequenceKeypoint","gcinfo","elapsedTime","collectgarbage",
+		"PhysicalProperties","Rect","Region3","Region3int16","UDim",
+		"Vector2int16","Vector3int16",
+		"cache.invalidate","cache.iscached","cache.replace","cloneref",
+		"compareinstances","base64_encode","base64_decode",
+		"debug.getconstant","debug.getconstants","debug.getinfo",
+		"debug.getproto","debug.getprotos","debug.getupvalue",
+		"debug.getupvalues","debug.setconstant","getgc",
+		"getloadedmodules","getrunningscripts","getscripts","getsenv",
+		"hookmetamethod","iscclosure","isexecutorclosure","islclosure",
+		"newcclosure","setreadonly","lz4compress","lz4decompress",
+		"getscriptclosure","request","getcallbackvalue","listfiles",
+		"writefile","isfolder","makefolder","appendfile","isfile",
+		"delfolder","delfile","loadfile","gethui","isreadonly",
+		"getnamecallmet-- ║   ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝   ║
 -- ╚═══════════════════════════════════════╝
 
 -- NEON CYBER PALETTE:
