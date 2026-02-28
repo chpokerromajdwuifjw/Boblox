@@ -287,7 +287,8 @@ G.CodeBox.BorderSizePixel    = 0
 G.CodeBox.Text               = 'print("Hello world")'
 G.CodeBox.FontFace           = FONT_MONO
 G.CodeBox.TextSize           = 14
-G.CodeBox.TextColor3         = C.TextNormal
+G.CodeBox.TextColor3         = Color3.fromRGB(0, 0, 0)
+G.CodeBox.TextTransparency   = 1  -- hide base text; syntax overlay labels render all color
 G.CodeBox.TextXAlignment     = Enum.TextXAlignment.Left
 G.CodeBox.TextYAlignment     = Enum.TextYAlignment.Top
 G.CodeBox.MultiLine          = true
@@ -299,7 +300,7 @@ local function makeSynLabel(name, color)
 	local lbl = Instance.new("TextLabel")
 	lbl.Name               = name
 	lbl.Size               = UDim2.new(1, 0, 1, 0)
-	lbl.Position           = UDim2.new(0, 8, 0, 4)
+	lbl.Position           = UDim2.new(0, 0, 0, 0)  -- CodeBox is already offset; children must be 0,0
 	lbl.BackgroundTransparency = 1
 	lbl.BorderSizePixel    = 0
 	lbl.Text               = ""
@@ -319,7 +320,7 @@ G.SynKeywords = makeSynLabel("Keywords_",      C.SynKeyword)
 G.SynNumbers  = makeSynLabel("Numbers_",       C.SynNumber)
 G.SynRemote   = makeSynLabel("RemoteHighlight_", C.SynRemote)
 G.SynStrings  = makeSynLabel("Strings_",       C.SynString)
-G.SynTokens   = makeSynLabel("Tokens_",        C.SynToken)
+G.SynTokens   = makeSynLabel("Tokens_",        C.TextNormal)  -- fallback: plain identifiers & operators
 
 -- Caret, line highlight, selection
 G.LineHL = Instance.new("Frame")
@@ -651,9 +652,12 @@ local function highlightNumbers(src)
 	return a
 end
 
+local _hlBusy = false
 local function updateHighlighting()
+	if _hlBusy then return end
+	_hlBusy = true
 	local s = G.CodeBox.Text:gsub("\13",""):gsub("\t","   ")
-	G.CodeBox.Text = s -- normalise (will re-trigger once but stabilise)
+	if G.CodeBox.Text ~= s then G.CodeBox.Text = s end  -- normalise once
 
 	G.SynKeywords.Text = highlightKeywords(s, KW_SET)
 	G.SynGlobals.Text  = highlightKeywords(s, GL_SET)
@@ -669,6 +673,7 @@ local function updateHighlighting()
 	local nums = {}
 	for i = 1, count do nums[i] = tostring(i) end
 	G.Lines.Text = table.concat(nums, "\n")
+	_hlBusy = false
 end
 
 updateHighlighting()
